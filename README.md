@@ -7,4 +7,4 @@ Automate your online bill payment/ website signup journey with this python scrip
 
 ### Protecting Sensitive information
 I used python-dotenv for protecting sensitive information like passwords, API keys etc
-pip install python-dotenv
+> **_pip install python-dotenv_**
