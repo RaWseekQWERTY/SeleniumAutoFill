@@ -52,7 +52,7 @@ if firstName_input and userName_input and password_input and conformPass_input a
     conformPass_input.send_keys(password)
     email_input.send_keys(email)
 
-submit_click = driver.find_element(By.XPATH,'//input[@type="submit" and @class="com-users-registration__register btn btn-primary validate"]')
+submit_click = driver.find_element(By.XPATH,'//button[@type="submit" and @class="com-users-registration__register btn btn-primary validate"]')
 print(submit_click)
 if submit_click:
     submit_click.click()
