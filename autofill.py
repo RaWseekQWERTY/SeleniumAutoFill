@@ -6,7 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, WebDriverException
 from pathlib import Path
 
 load_dotenv()
@@ -27,7 +27,7 @@ def set_fieldEncryption(driver, element):
 #driver path
 script_dir = Path(__file__).resolve().parent
 diver_path = script_dir.joinpath("chromedriver-linux64","chromedriver")
-service = Service(diver_path)
+
 chrome_options= Options()
 
 def wait_for_element(driver, by,element_identifier,timeout=5):
@@ -66,13 +66,19 @@ def main():
     #input("Enter to exit")from selenium.webdriver.chrome.service import Service
     else:
         chrome_options.add_argument("--headless")
-
+    service = Service(diver_path)
     driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.get(signup)
-    set_fields(driver)
+    try:
+        set_fields(driver)
+        submit_click(driver)
+    except WebDriverException as e:
+        print(f"WebDriver Error {e}")
+    finally:
+        if not debugging:
+         driver.quit()
 
-    if not debugging:
-        driver.quit()
+
 
 
 if __name__ == "__main__":
