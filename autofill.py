@@ -4,6 +4,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 from pathlib import Path
 
 load_dotenv()
@@ -26,6 +29,13 @@ script_dir = Path(__file__).resolve().parent
 diver_path = script_dir.joinpath("chromedriver-linux64","chromedriver")
 service = Service(diver_path)
 chrome_options= Options()
+
+def wait_for_element(driver, by,element_identifier,timeout=5):
+    try:
+        presentElement=EC.presence_of_element_located((by, element_identifier))
+        
+    except TimeoutException:
+        print(f"Timed out waiting for {element_identifier} to load")
 
 def set_fields(driver):
     firstName_input = driver.find_element(By.ID,"jform_name")
